@@ -20,6 +20,8 @@ class ETBOARD_SIMPLE_MQTT {
 
   private:	
     String get_topic_prefix(void);
+    static const char MAX_DIGITAL = 11;
+    int previous_digital_value[MAX_DIGITAL];
     
   
   public:
@@ -31,6 +33,7 @@ class ETBOARD_SIMPLE_MQTT {
     String mqtt_simple_stat;
 
     String mac_address;
+    int current_digital_value[MAX_DIGITAL];
     
   	ETBOARD_SIMPLE_MQTT();
     
@@ -61,6 +64,12 @@ class ETBOARD_SIMPLE_MQTT {
     void recv_digital(void);
     boolean is_changed_digital(void);
     void loop(void);
+
+    void dg_Write(int pin, int value);
+    void update_digital_value();
+    bool isChanged_digital_value(void);
+    void initailize_digital_value(void);
+    int  dg_Read(int pin);
 };
 
 #endif

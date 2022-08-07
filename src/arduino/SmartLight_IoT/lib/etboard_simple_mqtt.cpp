@@ -295,6 +295,79 @@ void ETBOARD_SIMPLE_MQTT::loop(void)
   client.loop();
 }
 
+//==========================================================================================
+void ETBOARD_SIMPLE_MQTT::dg_Write(int pin, int value)
+//==========================================================================================
+{
+  switch (pin) {
+    case D2: current_digital_value[2] = value; break;
+    case D3: current_digital_value[3] = value; break;
+    case D4: current_digital_value[4] = value; break;
+    case D5: current_digital_value[5] = value; break;
+    case D6: current_digital_value[6] = value; break;
+    case D7: current_digital_value[7] = value; break;
+    case D8: current_digital_value[8] = value; break;
+    case D9: current_digital_value[9] = value; break;
+    default:Serial.println("dg_write error"); break;
+  }
+}
+
+//==========================================================================================
+void ETBOARD_SIMPLE_MQTT::update_digital_value(void)
+//==========================================================================================
+{ 
+  previous_digital_value[2] = current_digital_value[2];
+  previous_digital_value[3] = current_digital_value[3];
+  previous_digital_value[4] = current_digital_value[4];
+  previous_digital_value[5] = current_digital_value[5];
+  previous_digital_value[6] = current_digital_value[6];
+  previous_digital_value[7] = current_digital_value[7];
+  previous_digital_value[8] = current_digital_value[8];
+  previous_digital_value[9] = current_digital_value[9];
+}
+
+//==========================================================================================
+bool ETBOARD_SIMPLE_MQTT::isChanged_digital_value(void)
+//==========================================================================================
+{ 
+  for(int i=2; i<MAX_DIGITAL; i++) {
+    if (previous_digital_value[i] != current_digital_value[i]) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+//==========================================================================================
+void ETBOARD_SIMPLE_MQTT::initailize_digital_value()
+//==========================================================================================
+{
+  for(int i=2; i<MAX_DIGITAL; i++) {
+    previous_digital_value[i] = 0;
+    current_digital_value[i] = 0;
+  }
+}
+
+//==========================================================================================
+int ETBOARD_SIMPLE_MQTT::dg_Read(int pin)
+//==========================================================================================
+{  
+  int value = 0;
+  switch (pin) {
+    case D2: value = current_digital_value[2]; break;
+    case D3: value = current_digital_value[3]; break;
+    case D4: value = current_digital_value[4]; break;
+    case D5: value = current_digital_value[5]; break;
+    case D6: value = current_digital_value[6]; break;
+    case D7: value = current_digital_value[7]; break;
+    case D8: value = current_digital_value[8]; break;
+    case D9: value = current_digital_value[9]; break;
+    default:Serial.println("get_digital_value error"); break;
+  }
+  return value;
+}
+
  
 //=================================================================================
 // End of Line
