@@ -55,7 +55,7 @@ class ETBOARD_SIMPLE_MQTT {
     String get_tele_prefix(void);
     void onConnectionEstablished(void);
     void send_test_analog_a0(void);
-    void publish_tele(const String &topic, const String &payload);
+    void publish(const String &topic, const String &payload);
     void send_analog(void);
     void send_digital(void);
     void recv_digital(void);

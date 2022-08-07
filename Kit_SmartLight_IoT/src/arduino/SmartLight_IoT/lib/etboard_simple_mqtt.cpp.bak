@@ -176,7 +176,7 @@ void ETBOARD_SIMPLE_MQTT::send_test_analog_a0(void)
 void ETBOARD_SIMPLE_MQTT::publish_tele(const String &topic, const String &payload)
 //=================================================================================
 {  
-  client.publish(get_tele_prefix() + topic, payload);
+  client.publish(get_topic_prefix() + topic, payload);
 }
 
 //=================================================================================
