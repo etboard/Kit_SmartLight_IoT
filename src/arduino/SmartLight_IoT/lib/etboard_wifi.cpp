@@ -9,6 +9,7 @@
 ******************************************************************************************/
 
 #include "etboard_wifi.h"
+#include <wifi.h>
 
 WiFiManagerParameter * custom_mqtt_server;
 WiFiManagerParameter * custom_mqtt_port;
@@ -230,13 +231,21 @@ void ETBOARD_WIFI::wifi_config()
   //useful to make it all retry or go to sleep
   //in seconds
   //wifiManager.setTimeout(120);
-  wifiManager.setTimeout(15);
-
+  wifiManager.setTimeout(30);
+  
+  
+	String str_wifi_ap_name = "ET_AP_" + WiFi.macAddress().substring(9);  
+  int str_len = str_wifi_ap_name.length() + 1;
+  
+  char ch_wifi_ap_name[20];
+  str_wifi_ap_name.toCharArray(ch_wifi_ap_name, str_len);
+  
   //fetches ssid and pass and tries to connect
   //if it does not connect it starts an access point with the specified name
   //here  "AutoConnectAP"
   //and goes into a blocking loop awaiting configuration
-  if (!wifiManager.autoConnect("AutoConnectAP", "password")) {
+  //if (!wifiManager.autoConnect("AutoConnectAP", "password")) {
+  if (!wifiManager.autoConnect(ch_wifi_ap_name, "12341234")) {  
     Serial.println("failed to connect and hit timeout");
     delay(3000);
     //reset and try again, or maybe put it to deep sleep
