@@ -1,0 +1,26 @@
+body {
+  background-color: #0a70dc;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header-style {
+  border-bottom:0.5px dotted #78afe9; margin-bottom:20px;
+}
+
+.seciton-header {
+  padding-left:20px; padding-right:20px; margin-bottom:20px;
+}
+
+.thumimg {
+  max-height: 20px;
+  padding-right:10px;
+}
+
+
+.s-title {
+  color:#8EC5F2;
+  font-size:0.8em;
+}
