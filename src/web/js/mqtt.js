@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------------------
-* FileName      : index.js
+* FileName      : mqtt.js
 * Description   : MQTT 접속 및 데이터 가져오기 / 차트 생성
 * Author        : (주)한국공학기술연구원
 * Created Date  : 2022.10
@@ -14,12 +14,10 @@ let id = window['localStorage'].getItem('id');
 let password = window['localStorage'].getItem('pw');
 
 let topic = macAdress + '/et/smpl/tele/#';
+let cmnd = macAdress + '/et/smpl/cmnd/';
 let useTLS = false;
-//let useTLS = true;
 let cleansession = true;
 let reconnectTimeout = 3000;
-let tempData = new Array();
-let humiData = new Array();
 let mqtt;
 
 function MQTTconnect() {
@@ -55,6 +53,7 @@ function onConnect() {
 };
 
 function onConnectionLost(response) {
+    console.log("connection lost");
     setTimeout(MQTTconnect, reconnectTimeout);
     $('#status').html("Connection lost. Reconnecting...")
         .attr('class', 'alert alert-warning');
@@ -75,87 +74,7 @@ function onMessageArrived(message) {
     }
 };
 
-function processSensor(payload){
-  let obj;
-  try {
-      obj = JSON.parse(payload);
-  } catch (e) {
-      return undefined; // Or whatever action you want here
-  }
-
-  $('#Solar').text(obj.Solar);
-  $('#Windturbine').text(obj.Windturbine);
-  $('#Solar_Max').text(obj.Solar_Max);
-  $('#Wind_Max').text(obj.Wind_Max);
-
-
-  // temperature
-  $('#temperatureSensor').html('(Sensor value: ' + obj.Solar + ')');
-  $('#temperatureLabel').text(obj.Solar);
-  $('#temperatureLabel').addClass('badge-default');
-
-  tempData.push({
-      "timestamp": Date().slice(16, 24),
-      "value": parseInt(obj.Solar)
-  });
-  if (tempData.length >= 10) {
-      tempData.shift()
-  }
-  drawChart("temperature", tempData);
-
-  // humidty
-  $('#humiditySensor').html('(Sensor value: ' + obj.Windturbine + ')');
-  $('#humidityLabel').text(obj.Windturbine);
-  $('#humidityLabel').addClass('badge-default');
-
-  humiData.push({
-      "timestamp": Date().slice(16, 24),
-      "value": parseInt(obj.Windturbine)
-  });
-  if (humiData.length >= 10) {
-      humiData.shift()
-  }
-  drawChart("humidity", humiData);
-
-}
-
-function drawChart(sensor, data) {
-    let ctx;
-    if (sensor === "temperature") {
-        ctx = document.getElementById("tempChart").getContext("2d");
-    } else if (sensor === "humidity") {
-        ctx = document.getElementById("humiChart").getContext("2d");
-    } else {
-      return;
-    };
-
-    let values = []
-    let timestamps = []
-
-    data.map((entry) => {
-        values.push(entry.value);
-        timestamps.push(entry.timestamp);
-    });
-
-    let chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: timestamps,
-            datasets: [{
-                backgroundColor: 'rgb(84, 0, 255)',
-                borderColor: 'rgb(84, 0, 255)',
-                data: values
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            }
-        }
-    });
-}
 
 $(document).ready(function () {
-    //drawChart("temperature", tempData);
     MQTTconnect();
 });

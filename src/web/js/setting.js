@@ -49,25 +49,45 @@ function init() {
   {
     $('#inputMacAddress').val(window['localStorage'].getItem('macAddress'));
   } else {
-    $('#inputMacAddress').val("아이디를 입력하세요");
+    $('#inputMacAddress').val("");
+  }
+
+  if(window['localStorage'].getItem('inputName'))
+  {
+    $('#inputName').val(window['localStorage'].getItem('inputName'));
+  } else {
+    $('#inputName').val("");
+  }
+
+  if(window['localStorage'].getItem('inputAddress'))
+  {
+    $('#inputAddress').val(window['localStorage'].getItem('inputAddress'));
+  } else {
+    $('#inputAddress').val("");
   }
 
 }
 
 function save() {
-  if(validdationCheck())
-  {
-    window['localStorage'].setItem('url', $('#inputUrl').val());
-    window['localStorage'].setItem('port', $('#inputPort').val());
-    window['localStorage'].setItem('id', $('#inputID').val());
-    window['localStorage'].setItem('pw', $('#inputPassword').val());
-    window['localStorage'].setItem('macAddress', $('#inputMacAddress').val());
-    alert("설정값이 올바르게 저장되었습니다");
-  }
+
+  if(!validdationCheck())
+    return false;
+
+  window['localStorage'].setItem('macAddress', $('#inputMacAddress').val().trim());
+  window['localStorage'].setItem('inputName', $('#inputName').val().trim());
+  window['localStorage'].setItem('inputAddress', $('#inputAddress').val().trim());
+
+  window['localStorage'].setItem('url', $('#inputUrl').val().trim());
+  window['localStorage'].setItem('port', $('#inputPort').val().trim());
+  window['localStorage'].setItem('id', $('#inputID').val().trim());
+  window['localStorage'].setItem('pw', $('#inputPassword').val().trim());
+
+  alert("설정값이 올바르게 저장되었습니다");
+
 }
 
 function validdationCheck() {
-  if(validation("#inputUrl") && validation("#inputPort") && validation("#inputID") && validation("#inputPassword") && validation("#inputMacAddress"))
+  if(validation("#inputMacAddress") && validation("#inputName") && validation("#inputAddress") && validation("#inputUrl") & validation("#inputPort") )
   {
     return true;
   }

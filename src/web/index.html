@@ -10,110 +10,161 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ETboard IoT 스마트 신재생 에너지 모니터링">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <meta name="description" content="IoT 스마트 신재생 에너지 모니터링 | ETboard">
   <meta name="author" content="KETRI">
 
-  <title>ETboard IOT 스마트 신재생 에너지 모니터링</title>
+  <title>IOT 스마트 신재생 에너지 모니터링 | ETboard</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="./css/etboard.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
   <script type="text/javascript" src="js/storageCheck.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/mqtt.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+
 
 </head>
 <body>
 
   <!-- 헤더 -->
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark header-style">
-      <div class="col-2">
+    <div class="row g-0">
+      <nav class="navbar navbar-expand-lg navbar-dark header-style">
+        <div class="col-2">
 
-      </div>
-      <div class="col-8">
-        <div class="row text-center">
-          <h8 class="page-header-title text-white mb-0">IOT 스마트 신재생 <br />에너지 키트 모니터링</h8>
         </div>
-      </div>
-      <div class="col-2">
-        <div class="row text-end">
-          <a href="./setting.html"><i class="bi bi-gear-fill text-white" style="font-size:1.5em"></i></a>
+        <div class="col-8">
+          <div class="row text-center">
+            <h8 class="page-header-title text-white mb-0">IOT 스마트 신재생 <br />에너지 키트 모니터링</h8>
+          </div>
         </div>
-      </div>
-    </nav>
+        <div class="col-2 pe-2">
+          <div class="row text-end">
+            <a href="./setting.html"><i class="bi bi-gear-fill text-white" style="font-size:1.5em"></i></a>
+          </div>
+        </div>
+      </nav>
+    </div>
   </div>
 
-  <section class="page-header-box seciton-header">
-    <div class="container">
-      <div class="row">
+  <div class="container">
+    <section class="page-header-box seciton-header">
+      <br />
+      <div class="row g-0">
         <div class="col-12">
           <div class="text-start">
             <!-- 기본 값 변경 -->
-            <div class="page-header-title text-white"><b>IoT 가로등</b></div>
-            <div class="page-header-title text-white">전남 순천시 기적의 도서관길 25</div>
+            <div class="page-header-title text-white ps-4" id="inputName"><b>IoT 가로등</b></div>
+            <div class="page-header-title text-white ps-4" id="inputAddress"><small>전남 순천시 기적의 도서관길 25</small></div>
           </div>
         </div>
       </div> <!--end row-->
-    </div> <!--end container-->
-  </section>
+    </section>
+  </div> <!--end container-->
 
-  <div class="container">
-    <div class="row">
-      <div class="col-6 col-md-6 mb-2">
-        <div class="card-transparent">
-          <div class="card-body text-center">
-            <!-- 배경 이미지 수정 -->
-            <img src="./images/bg.png" class="img-fluid p-1"/>
-          </div>
-        </div>
-      </div>
-      <div class="col-6 col-md-6 mb-2 p-4" >
-        <div class="card-transparent">
-          <div class="card-body">
-
-            <div class="col-12 mb-5">
-              <h5 class="s-title">태양광 발전량</h5>
-              <h6 class="text-white"><small id="Solar">(데이터 수신중)</small></h6>
-            </div>
-
-            <div class="col-12 mb-5">
-              <h5 class="s-title">태양광 발전량</h5>
-              <h6 class="text-white"><small id="Windturbine">(데이터 수신중)</small></h6>
-            </div>
-
-            <div class="col-12 mb-5">
-              <h5 class="s-title">태양광 발전량</h5>
-              <h6 class="text-white"><small id="Solar_Max">(데이터 수신중)</small></h6>
-            </div>
-
-            <div class="col-12 mb-5">
-              <h5 class="s-title">태양광 발전량</h5>
-              <h6 class="text-white"><small id="Wind_Max">(데이터 수신중)</small></h6>
+    <div class="container">
+      <div class="row g-0">
+        <div class="col-6 col-md-6 mb-1">
+          <div class="card-transparent">
+            <div class="card-body text-center">
+              <!-- 배경 이미지 수정 -->
+              <img src="./images/bg.png" class="img-fluid p-1"/>
             </div>
           </div>
         </div>
-      </div>
-    </div> <!-- row -->
-  </div> <!-- end container -->
+        <div class="col-6 col-md-6 mb-1 p-4" >
+          <div class="card-transparent">
+            <div class="card-body">
 
-  <footer class="text-center mt-10">
-    <div class="row g-0">
-      <div class="col-6 col-md-6 mb-2 d-grid gap-2 text-bg-light">
-        <!-- 유투브 채널 설정 -->
-        <a href="https://www.youtube.com/watch?v=4y_pBARQwX4">
-          <div class="pt-3 pb-3"><img src="./images/youtube.png" class="img-fluid thumimg"/>유투브 보러가기</div>
-        </a>
+              <div class="col-12 mb-4">
+                <h5 class="s-title">최근 수신 일시<small id="latestDate"></small></h5>
+                <h6 class="text-white"><small id="latestTime">(데이터 수신중)</small></h6>
+              </div>
+
+              <div class="col-12 mb-4">
+                <h5 class="s-title">조도 센서(밝기)</h5>
+                <h6 class="text-white"><small id="brightness">(데이터 수신중)</small></h6>
+              </div>
+
+              <div class="col-12 mb-4">
+                <h5 class="s-title">초음파 센서(센서거리))</h5>
+                <h6 class="text-white"><small id="distance">(데이터 수신중)</small></h6>
+              </div>
+
+              <div class="col-12 mb-4">
+                <h5 class="s-title">파랑 LED</h5>
+                <div class="btn-group btn-group-blue" role="group" aria-label="Basic radio toggle button group">
+                  <input type="radio" class="btn-check btn-blue-check" name="btnradioBlue" id="btnradioBlueOn" value="1" autocomplete="off" checked>
+                  <label class="btn btn-outline-light" for="btnradioBlueOn">On</label>
+
+                  <input type="radio" class="btn-check btn-blue-check" name="btnradioBlue" id="btnradioBlueOff" value="0" autocomplete="off">
+                  <label class="btn btn-outline-light" for="btnradioBlueOff">Off</label>
+                </div>
+              </div>
+
+              <div class="col-12 mb-4">
+                <h5 class="s-title">초록 LED</h5>
+                <div class="btn-group btn-group-green" role="group" aria-label="Basic radio toggle button group">
+                  <input type="radio" class="btn-check btn-green-check" name="btnradioGreen" id="btnradioGreenOn" value="1" autocomplete="off" >
+                  <label class="btn btn-outline-light" for="btnradioGreenOn">On</label>
+
+                  <input type="radio" class="btn-check btn-green-check" name="btnradioGreen" id="btnradioGreenOff"  value="0" autocomplete="off" checked>
+                  <label class="btn btn-outline-light" for="btnradioGreenOff">Off</label>
+                </div>
+              </div>
+
+              <div class="col-12 mb-4">
+                <h5 class="s-title">수동 모드</h5>
+                <div class="btn-group btn-group-manual" role="group" aria-label="Basic radio toggle button group">
+                  <input type="radio" class="btn-check btn-manual-check" name="btnradioManualMode" id="btnradioManualModeOn" value="manual" autocomplete="off" >
+                  <label class="btn btn-outline-light" for="btnradioManualModeOn">On</label>
+
+                  <input type="radio" class="btn-check btn-manual-check" name="btnradioManualMode" id="btnradioManualModeOff" value="automatic" autocomplete="off" checked>
+                  <label class="btn btn-outline-light" for="btnradioManualModeOff">Off</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div> <!-- row -->
+    </div> <!-- end container -->
+
+    <section class="text-center">
+      <div class="container">
+        <div class="row g-0">
+          <div class="col-6 col-md-6 mb-2 d-grid gap-2 text-bg-light">
+            <!-- 유투브 채널 설정 -->
+            <a href="https://www.youtube.com/watch?v=CFjAO57f8wM">
+              <div class="pt-3 pb-3"><img src="./images/youtube.png" class="img-fluid thumimg"/>유투브</div>
+            </a>
+          </div>
+          <div class="col-6 col-md-6 mb-2 d-grid gap-2 text-bg-secondary">
+            <a href="./dataview.html"><div class="text-white pt-3 pb-3">차트</div></a>
+          </div>
+        </div>
       </div>
-      <div class="col-6 col-md-6 mb-2 d-grid gap-2 text-bg-secondary">
-        <a href="./dataview.html"><div class="text-white pt-3 pb-3">도표로 보기</div></a>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="text-center">
+      <div class="container g-0 ">
+        <div class="row g-0 text-center">
+          <small>
+              <img src="./images/logo.png" class="img-fluid"/>
+          </small>
+        </div>
+        <div class="row mt-2">
+          <a href="http://et.ketri.re.kr" class="text-white"><b>http://et.ketri.re.kr</b></a>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+
 </body>
 </html>

@@ -1,5 +1,22 @@
+html {
+  overflow-x: hidden;
+}
+
 body {
+  max-width:100%;
+  width:100%;
+  max-height:100%;
+  overflow: hidden;
+}
+
+.row {
+  padding:0 !important;
+}
+
+.container {
+  max-width: 480px;
   background-color: #0a70dc;
+  padding:0;
 }
 
 a {
@@ -7,11 +24,11 @@ a {
 }
 
 .header-style {
-  border-bottom:0.5px dotted #78afe9; margin-bottom:20px;
+  border-bottom:0.5px dotted #78afe9;
 }
 
 .seciton-header {
-  padding-left:20px; padding-right:20px; margin-bottom:20px;
+
 }
 
 .thumimg {
