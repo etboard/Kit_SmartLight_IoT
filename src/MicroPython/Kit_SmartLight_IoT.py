@@ -31,8 +31,8 @@ cds_pin = ADC(Pin(A3))                                   # 조도 센서 핀: A3
 echo_pin = Pin(D8)                                       # 초음파 수신부: D8
 trig_pin = Pin(D9)                                       # 초음파 송신부: D9
 
-blue_led = Pin(D3)                                       # 파랑 LED: D3
-green_led = Pin(D4)                                      # 초록 LED: D3
+blue_led = Pin(D2)                                       # 파랑 LED: D2
+green_led = Pin(D3)                                      # 초록 LED: D3
 
 blue_led_state = 0                                       # 파랑 LED 상태: 꺼짐
 green_led_state = 0                                      # 초록 LED 상태: 꺼짐
